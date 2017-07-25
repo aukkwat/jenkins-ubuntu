@@ -24,6 +24,40 @@ RUN \
     echo "export TERM=vt100" >> /root/.bashrc && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install required packages and remove the apt packages cache when done.
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+        git \
+        openssh-server \
+        curl \
+        bash \
+        rsync \
+        mysql-client \
+        iputils-ping \
+        cifs-utils \
+        libmysqlclient-dev \
+        libxmlsec1-dev \
+        libxml2-dev \
+        libldap-dev \
+        libldap2-dev \
+        ldap-utils \
+        libsasl2-dev \
+        libssl-dev \
+        libffi-dev \
+        mercurial \
+        python3 \
+        python3-dev \
+        python3-pip \
+        python3-virtualenv \
+        python-software-properties \
+        build-essential \
+        vim && \
+   rm -rf /var/lib/apt/lists/*
+
+# Install Node V6
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt-get install -y nodejs
+
 # From Official jenkins docker image - https://github.com/jenkinsci/docker
 ENV JENKINS_HOME /var/jenkins_home
 ENV JENKINS_SLAVE_AGENT_PORT 50000
